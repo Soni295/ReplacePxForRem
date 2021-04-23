@@ -1,5 +1,5 @@
 //import { opendir } from 'fs/promises';
-const {opendir} = require('fs/promises')
+const { opendir } = require('fs/promises')
 const fs = require('fs')
 const PATH = require('path')
 

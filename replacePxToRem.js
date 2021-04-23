@@ -15,14 +15,13 @@ const REGEX = {
 
 // checks for files
 const isCssFile = name => REGEX.cssExt.test(name)
-const withoutAccess = name => !dontPass.some(dir => dir === name)
+const withoutAccess = name => !dontPass.find(dir => dir === name)
 const dontHasExt = name => !REGEX.withExt.test(name)
 const isDir = name => withoutAccess(name) && dontHasExt(name)
 const doSelfHasPx = name => REGEX.unitPx.test(name)
 const changeLine = text => doSelfHasPx(text)
   ? text.replace(/[0-9]*px/g, L => L.replace(/px/, '')/ 16 +'rem')
   : text
-
 
 const changePxToRem = async(path) => {
   const newCss = path.replace(REGEX.newExt, '2.css')

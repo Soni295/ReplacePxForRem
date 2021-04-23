@@ -40,16 +40,16 @@ const searchFile = async path => {
     for await(const { name } of directory) {
       switch(true) {
         case REGEX.cssExt.test(name):
-          console.log(`I\'m a css file -> `,name)
+          console.log(`I\'m a css file ---> `,name)
           break
         case REGEX.withExt.test(name):
-          console.log(`I\'m not a css file ->`, name)
+          console.log(`I\'m not a css file --->`, name)
           break
         case dontPass.some( dir => dir ===name):
-          console.log(`Sorry, don't have allow for this directory`, name)
+          console.log(`Sorry, don't have allow for this directory ---->`, name)
           break
         default:
-            console.log('Maybe i\'m a directory', name)
+            console.log('Maybe i\'m a directory --->', name)
             searchFile(`${path}/${name}`)
           break
       }

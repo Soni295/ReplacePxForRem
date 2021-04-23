@@ -1,30 +1,35 @@
 //import { opendir } from 'fs/promises';
 const {opendir} = require('fs/promises')
 const fs = require('fs')
+const PATH = require('path')
+
+const REGEX = {
+  cssExt : /.*.css/,
+  withExt : /.*\..*/,
+  unitPx: /.*px/
+}
 
 const escritor = async(path) => {
-  const read = fs.createReadStream(path, {encoding: 'utf-8'} )
+
+  const read = fs.createReadStream(PATH.join(__dirname, path), {encoding: 'utf-8'} )
+
   read.on('data', chuck => {
-    renglones = chuck.split('\n')
-    for(const renglon of renglones){
-      if(/.*px/.test(renglon)) {
-        const rem = renglon.replace(/.{1,3}px/g, L =>
+
+    lines = chuck.split('\n')
+    for(const line of lines){
+      if(REGEX.unitPx.test(line)) {
+        const rem = line.replace(/.{1,3}px/g, L =>
           ' ' + L.replace(/px/, '')/ 16 +'rem'
         )
-        console.log(rem)
+        console.log(line, '<- before')
+        console.log(rem, '<- after')
       }
     }
 
   })
 }
 
-//escritor('./main.css')
-
-const REGEX = {
-  cssExt : /.*.css/,
-  withExt : /.*\..*/
-}
-
+// escritor('./example/main.css')
 
 
 const dontPass = ['dontpass']
@@ -55,12 +60,4 @@ const searchFile = async path => {
   }
 }
 
-/*
-
-*/
-
 searchFile('./')
-
-
-
-console.log(dontPass.some(item => item == ''))

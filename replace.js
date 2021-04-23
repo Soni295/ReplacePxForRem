@@ -22,24 +22,45 @@ const escritor = async(path) => {
 
 const REGEX = {
   cssExt : /.*.css/,
-  withOutExt : /.*\..*/
+  withExt : /.*\..*/
 }
 
+
+
+const dontPass = ['dontpass']
 
 const searchFile = async path => {
-  const directory = await opendir(path);
-  for await(const {name }of directory) {
-    switch(true) {
-      case REGEX.cssExt.test(name):
-        console.log('I\'m css file',name)
-        break
-      case REGEX.withOutExt.test(name):
-        console.log('I\'m not css file', name)
-        break
-      default:
-        console.log('Maybe I\'m directory', name)
-        break
+  try {
+    const directory = await opendir(path);
+    for await(const { name } of directory) {
+      switch(true) {
+        case REGEX.cssExt.test(name):
+          console.log(`I\'m a css file`,name)
+          break
+        case REGEX.withExt.test(name):
+          console.log(`I\'m not a css file`, name)
+          break
+        case dontPass.some( dir => dir ===name):
+          console.log(`Sorry, this directory, doesn't works`, name)
+          break
+        default:
+            console.log('Maybe i\'m a directory', name)
+            searchFile(`${path}/${name}`)
+          break
+      }
     }
   }
+  catch(err){
+    console.log('I\'m not a directory', path.replace(/.*\//, ''))
+  }
 }
+
+/*
+
+*/
+
 searchFile('./')
+
+
+
+console.log(dontPass.some(item => item == ''))

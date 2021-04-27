@@ -1,7 +1,7 @@
 const fs = require('fs')
 const PATH = require('path')
 
-const { isCssFile, isDir, changeLine, REGEX } = require('./')
+const { isCssFile, isDir, changeLine, REGEX } = require('./replacePxToRem/Tools')
 
 const config = {
   'backUp': true, // created a file without change it name is name-back-up.css
@@ -12,21 +12,27 @@ const config = {
 const dontPass = ['dontpass', 'dontpass2', 'nodemodules']
 
 const changePxToRem = path => {
-  const newCss = path.replace(REGEX.newExt, 'temp.css')
+  // first change original file name example 'main.css' for 'main.css-back-up'
   const newBackUp = path.replace(REGEX.newExt, '-back-up.css')
   fs.renameSync(path, newBackUp)
-
   const read = fs.createReadStream(newBackUp, {encoding: 'utf-8'} )
-  const write = fs.createWriteStream(newCss)
 
+  // then create a new file use to reference the original example
+  // 'main.css' for 'maintemp.css'
+  const newCss = path.replace(REGEX.newExt, 'temp.css')
+  const write = fs.createWriteStream(newCss)
   read.on('data', chuck =>  write.write(changeLine(chuck)))
-  read.on('end', () => fs.renameSync(newCss, path))
+
+  read.on('end', () => {
+    fs.renameSync(newCss, path)
+    fs.unlinkSync(newBackUp)
+  })
 }
 
 const action = (nameFile, path) => {
   if(isDir(nameFile, dontPass)) {
     searchFile(PATH.join(path, nameFile))
-  } else if(isCssFile(nameFile)) {
+  }else if(isCssFile(nameFile)) {
     changePxToRem(PATH.join(path, nameFile))
   }
 }

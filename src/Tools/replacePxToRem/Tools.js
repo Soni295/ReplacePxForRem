@@ -1,6 +1,6 @@
 // RegExp obj for filtler
 const REGEX = {
-  cssExt : /\.css$/,
+  cssExt : /[^temp|\-back\-up]\.css$/ ,
   withExt : /.*\..*/,
   unitPx: /.*px/,
   newExt: /.{4}$/

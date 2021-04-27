@@ -1,3 +1,5 @@
 const searchFile = require('./Tools/replacePxtoRem')
 
-searchFile(__dirname)
+module.exports = {
+  searchFile
+}

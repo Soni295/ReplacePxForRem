@@ -1,13 +1,15 @@
 // RegExp obj for filtler
 const REGEX = {
-  cssExt : /[^temp|\-back\-up]\.css$/ ,
-  withExt : /.*\..*/,
+  cssExt : /.*\.css/,
+  isTemp : /temp/,
+  withExt: /.*\..*/,
   unitPx: /.*px/,
   newExt: /.{4}$/
 }
 
 // match only '.css'
-const isCssFile = text => REGEX.cssExt.test(text)
+const isCssFile = text => REGEX.cssExt.test(text) &&
+  !REGEX.isTemp.test(text)
 
 // check in a array dir which can't access
 const withoutAccess = (text, arr) => !arr.find(dir => dir === text)

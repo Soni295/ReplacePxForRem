@@ -15,10 +15,9 @@ const examples = [
   new Test('node modules', false),
   new Test('index.css', true),
   new Test('main.css', true),
-  new Test('maintemp.css', false),
-  new Test('indextemp.css', false),
-  new Test('main-back-up.css', false),
-  new Test('index-back-up.css', false),
+  new Test('style.css', true),
+  new Test('main-temp.css', false),
+  new Test('index-temp.css', false),
 ]
 
 for(const {file, response} of examples){

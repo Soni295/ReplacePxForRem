@@ -6,24 +6,30 @@ const dontPass = ['dontpass', 'dontpass2', 'nodemodules']
 
 // RegExp obj for filtler
 const REGEX = {
-  cssExt :  ,
-  withExt : /.*\..*/,
+  cssExt : /.*\.css/,
+  isTemp : /temp/,
+  withExt: /.*\..*/,
   unitPx: /.*px/,
   newExt: /.{4}$/
 }
 
+// match only '.css'
+const isCssFile = text => REGEX.cssExt.test(text) &&
+  !REGEX.isTemp.test(text)
 
-
-
-const isCssFile = text => /[^temp|\-back\-up]\.css$/.test(text)
+// check in a array dir which can't access
 const withoutAccess = (text, arr) => !arr.find(dir => dir === text)
+// check if file has extestion
 const dontHasExt = text => !REGEX.withExt.test(text)
+// check if is a file
 const isDir = (text, arr) => withoutAccess(text, arr) && dontHasExt(text)
+
+// check if the text has 'px'
 const doSelfHasPx = text => REGEX.unitPx.test(text)
+// change all px for rem
 const changeLine = text => doSelfHasPx(text)
   ? text.replace(/\d+px/g, L => L.replace(/px/, '')/ 16 +'rem')
   : text
-
 
 const changePxToRem = path => {
   // first change original file name example 'main.css' for 'main.css-back-up'

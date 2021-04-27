@@ -16,13 +16,10 @@ const hasExt = text => /.*\..*/.test(text)
 // check if is a file
 const isDir = (text, dontPass) => withoutAccess(text, dontPass) && !hasExt(text)
 
-// check if the text has 'px'
-const doSelfHasPx = text => /.*px/.test(text)
-
 // change all px for rem
-const changeLine = text => doSelfHasPx(text)
-  ? text.replace(/\d+px/g, L => L.replace(/px/, '')/ 16 +'rem')
-  : text
+const changeLine = text => text.replace(/\d+px/g,
+  L => L.replace(/px/, '')/ 16 +'rem'
+)
 
 const changePxToRem = path => {
   // first change original file name example 'main.css' for 'main.css-back-up'
@@ -43,7 +40,7 @@ const changePxToRem = path => {
 }
 
 const action = (nameFile, path) => {
-  if(isDir(nameFile)) {
+  if(isDir(nameFile, dontPass)) {
     searchFile(PATH.join(path, nameFile))
   }
   else if(isCssFile(nameFile)) {
@@ -60,13 +57,10 @@ const searchFile = (path=__dirname) => {
 }
 
 
+// searchFile()
+
 module.exports = {
   isCssFile,
-  withoutAccess,
-  hasExt,
   isDir,
-  doSelfHasPx,
   changeLine
 }
-
-// searchFile()

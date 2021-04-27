@@ -3,11 +3,6 @@ const PATH = require('path')
 
 const { isCssFile, isDir, changeLine, REGEX } = require('./replacePxToRem/Tools')
 
-const config = {
-  'backUp': true, // created a file without change it name is name-back-up.css
-  'undo': false // if exist back-up undo all change
-}
-
 // don't check all directorys in this array is case sensitive
 const dontPass = ['dontpass', 'dontpass2', 'nodemodules']
 
@@ -37,7 +32,7 @@ const action = (nameFile, path) => {
   }
 }
 
-const searchFile = async (path=__dirname) => {
+const searchFile = (path=__dirname) => {
   try{
     const directory = fs.readdirSync(path)
     for (const name of directory) action(name, path)

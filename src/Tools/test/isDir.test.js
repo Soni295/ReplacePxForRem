@@ -1,8 +1,8 @@
-const { isDir } = require('./Tools')
+const { isDir } = require('../index')
 
 // if file doesn't exit in dontpass and doesn't has extention return true
 // else return false
-const dontpass = ['secret', 'js', 'build-css']
+const dontPass = ['secret', 'js', 'build-css']
 
 class Test{
   constructor(file, response){
@@ -17,8 +17,8 @@ const examples = [
   new Test('build-css', false),
 ]
 
-for(const {file, response}of examples){
-  test(`if ${file} doesn't exist in | ${dontpass} | the result is ${response}`, () => {
-    expect(isDir(file, dontpass)).toBe(response)
+for(const {file, response} of examples){
+  test(`if ${file} doesn't exist in | ${dontPass} | the result is ${response}`, () => {
+    expect(isDir(file, dontPass)).toBe(response)
   })
 }

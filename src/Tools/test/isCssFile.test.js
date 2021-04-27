@@ -1,4 +1,4 @@
-const { isCssFile } = require('./Tools')
+const { isCssFile } = require('../index')
 
 // it has to end in .css then return true else false
 class Test{

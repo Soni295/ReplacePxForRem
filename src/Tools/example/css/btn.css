@@ -1,0 +1,33 @@
+.btn {
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 10px 10px;
+  border-radius: 50px;
+  transition: 500ms linear;
+}
+.btn-success {
+  background: #a6c5a6;
+  box-shadow: -1px 5px 6px 0px #7ca591;
+  color: wheat;
+}
+.btn-success:hover {
+  background: #4bb94b;
+}
+.btn-fail {
+  background: #c5a6a6;
+  box-shadow: -1px 5px 6px 0px #a57c7c;
+  color: wheat;
+}
+.btn-fail:hover {
+  background: #b94b4b;
+}
+.btn-random{
+  background: #c5a6c3;
+  box-shadow: -1px 5px 6px 0px #9f7ca5;
+  color: wheat;
+}
+.btn-random:hover {
+  background: #b24bb9;
+}

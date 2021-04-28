@@ -1,0 +1,30 @@
+@import url('./btn.css');
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.select {
+  display: grid;
+  grid-template-columns: repeat(3, 140px);
+  grid-gap: 10px;
+  border: 2px solid #d3d3d3;
+  padding: 100px 60px;
+  border-radius: 20px;
+  transition: 1000ms linear;
+}
+
+.select:hover {
+  border: 2px solid black;
+  box-shadow: -1px 21px 46px 0px #b7b7b7;
+}

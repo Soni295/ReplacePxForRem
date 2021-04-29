@@ -15,7 +15,7 @@ $ npm run test
 if you want to check how it works, change directory for ```src``` and copy ```index.js``` in example
 ```sh
 $ cd src
-$ cp index.js example
+$ cp replacePxtoRem.js example
 $ cd example/css
 ```
 then see css files inside
@@ -26,6 +26,6 @@ $ cd example/css
 then run index.js and compare
 ```sh
 $ cd ..
-$ node index.js
+$ node replacePxtoRem.js
 $ cd css
 ```

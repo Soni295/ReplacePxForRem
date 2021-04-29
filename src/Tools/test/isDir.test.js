@@ -14,6 +14,9 @@ const examples = [
   new Test('index', true),
   new Test('index.html', false),
   new Test('css', true),
+  new Test('style.css', false),
+  new Test('main.css', false),
+  new Test('index.css', false),
   new Test('build-css', false),
 ]
 

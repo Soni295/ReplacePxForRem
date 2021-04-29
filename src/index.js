@@ -4,8 +4,9 @@ const PATH = require('path')
 // don't check all directorys in this array is case sensitive
 const dontPass = ['dontpass', 'dontpass2', 'nodemodules']
 
-// match only if it end on '.css' but not if end on 'temp.css'
-const isCssFile = text => /.*\.css/.test(text) && !/temp/.test(text)
+// match only if it end on '.css' but not if end on 'temp.css' or
+// '-back-up.css'
+const isCssFile = text => /.*\.css/.test(text) && !/temp/.test(text) && !/-back-up/.test(text)
 
 // check in a array dir which can't access
 const withoutAccess = (text, dontPass) => !dontPass.includes(text)
@@ -22,20 +23,22 @@ const changeLine = text => text.replace(/\d+px/g,
 )
 
 const changePxToRem = path => {
+  const filesPath = {
+    'new': path.replace(/(.*)(\.css)/, '$1-temp$2'),
+    'old': path.replace(/(.*)(\.css)/, '$1-back-up$2')
+  }
   // first change original file name example 'main.css' for 'main.css-back-up'
-  const newBackUp = path.replace(REGEX.newExt, '-back-up.css')
-  fs.renameSync(path, newBackUp)
-  const read = fs.createReadStream(newBackUp, {encoding: 'utf-8'} )
+  fs.renameSync(path, filesPath.old)
+  const read = fs.createReadStream(filesPath.old, {encoding: 'utf-8'} )
 
   // then create a new file use to reference the original example
   // 'main.css' for 'maintemp.css'
-  const newCss = path.replace(/(\w*)(\.css)/, '$1-temp$2')
-  const write = fs.createWriteStream(newCss)
-  read.on('data', chuck =>  write.write(changeLine(chuck)))
+  const write = fs.createWriteStream(filesPath.new)
+  read.on('data', chuck => write.write(changeLine(chuck)))
 
   read.on('end', () => {
-    fs.renameSync(newCss, path)
-    fs.unlinkSync(newBackUp)
+    fs.renameSync(filesPath.new, path)
+    fs.unlinkSync(filesPath.old)
   })
 }
 
@@ -55,6 +58,4 @@ const searchFile = (path=__dirname) => {
   }
   catch(err) {}
 }
-
-
 searchFile()
